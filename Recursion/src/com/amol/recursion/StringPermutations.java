@@ -1,13 +1,17 @@
 package com.amol.recursion;
 
 public class StringPermutations {
+	int count =0 ;
 	public static void main(String args[]) {
 		//permutation("1234");
 		StringPermutations permutations = new StringPermutations();
+		//char[] a = {'a', 'b', 'c', 'd'};
 		char[] a = {'a', 'b', 'c'};
 		//System.out.println(a.length);
 		//System.out.println(3%3);
-		permutations.perm(a, 0);
+		//permutations.perm(a, a.length);
+		
+		permutations.perm2(a, 0, a.length);
 	}
 
 	/*
@@ -35,17 +39,37 @@ public class StringPermutations {
 		}
 	}
 
-	private void perm(char[] a, int pos) {
-		if (pos == a.length ) {
+	private void perm(char[] a, int size) {
+		if (size == 1 ) {
+			System.out.print(++count + " = ");
+			//if (a[0] == 'a')
 			for (char string : a) {
 				System.out.print(" " + string);
 			}
 			System.out.println();
 		} else {
-			for (int i = pos; i< a.length ; i++) {
-				a = swap(a, pos, ((pos + i ) % a.length));
-				perm(a, pos + 1);
-				a = swap(a, pos, ((pos + i ) % a.length));
+			for (int i = 0; i< size ; i++) {
+				//System.out.println("swapping " + pos + " and " + (pos + i));
+				a = swap(a, i, size - 1);
+				perm(a, size - 1);
+				a = swap(a, i, size - 1);
+			}
+		}
+	}
+	
+	private void perm2(char[] a, int pos, int size) {
+		if (pos == size) {
+			System.out.print(++count + " = ");
+			//if (a[0] == 'a')
+			for (char string : a) {
+				System.out.print(" " + string);
+			}
+			System.out.println();
+		} else {
+			for (int i = pos; i< size; i++){
+				swap(a, i, (pos + 1)%a.length);
+				perm2(a, i+1, size);
+				swap(a, i, (pos + 1)%a.length); 
 			}
 		}
 	}
